@@ -75,7 +75,7 @@ public class PlayerScript : MonoBehaviour
             //Run your 'you lose' function!
             Die();
         }
-        
+       
         //This checks to see if the thing you bumped into has the CoinScript script on it
         CoinScript coin = other.gameObject.GetComponent<CoinScript>();
         //If it does, run the code block belows
@@ -92,15 +92,27 @@ public class PlayerScript : MonoBehaviour
 
     //This function updates the game's score text to show how many points you have
     //Even if your 'score' variable goes up, if you don't update the text the player doesn't know
-    public void UpdateScore()
+    private void UpdateScore()
     {
         ScoreText.text = "Score: " + Score;
     }
 
     //If this function is called, the player character dies. The game goes to a 'Game Over' screen.
-    public void Die()
+    private void Die()
     {
         SceneManager.LoadScene("Game Over");
         Destroy(gameObject);
     }
-}
+        void OnCollisionExit2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Win"))
+            {
+               YouWin();
+            }
+            void YouWin()
+          {
+              SceneManager.LoadScene("You Win");
+              Destroy(gameObject);              
+          }
+        }
+}  
